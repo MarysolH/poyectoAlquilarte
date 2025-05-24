@@ -1,0 +1,44 @@
+doctype html
+html
+    head
+        title Lista de personas
+        link(rel='stylesheet', href='/styles.css')
+    body
+        h1 Lista de personas registradas
+        ul
+        each persona in personas
+            li
+                a(href=`/cuenta/${persona.id}`) #{persona.nombre} #{persona.apellido}
+        
+        h2 Agregar nueva persona
+    form(action="/cuenta" method="POST")
+
+        div
+          label(for="id") ID:
+          input(type="number" name="id" id="id" required)
+
+        div
+          label(for="nombre") Nombre:
+          input(type="text" name="nombre" id="nombre" required)
+
+        div
+          label(for="apellido") Apellido:
+          input(type="text" name="apellido" id="apellido" required)
+
+        div
+          label(for="mail") Email:
+          input(type="email" name="mail" id="mail" required)
+
+        div
+          label(for="sector") Sector:
+          input(type="text" name="sector" id="sector" required)
+          
+        div
+          label(for="rol") Rol:
+          input(type="text" name="rol" id="rol" required)
+        div
+
+        button(type="submit") Agregar
+        br
+        br
+        a(href="/admin") Volver al inicio

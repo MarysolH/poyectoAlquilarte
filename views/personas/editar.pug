@@ -1,0 +1,35 @@
+doctype html
+html
+    head
+        title Editar persona
+        link(rel='stylesheet', href='/styles.css')
+    body
+    
+        h1 Editar datos de #{persona.nombre} #{persona.apellido}
+
+        form(action=`/cuenta/${persona.id}/editar` method="POST")
+            div
+                label(for="nombre") Nombre:
+                input(type="text" name="nombre" id="nombre" required value=persona.nombre)
+
+            div
+                label(for="apellido") Apellido:
+                input(type="text" name="apellido" id="apellido" required value=persona.apellido)
+
+            div
+                label(for="mail") Email:
+                input(type="email" name="mail" id="mail" required value=persona.mail)
+
+            div
+                label(for="sector") Sector:
+                input(type="text" name="sector" id="sector" required value=persona.sector)
+
+            div
+                label(for="rol") Rol:
+                input(type="text" name="rol" id="rol" required value=persona.rol)
+                
+
+            button(type="submit") Guardar cambios 
+        
+
+        a(href='/admin') Cancelar

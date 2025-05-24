@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "nombre": "Martina",
+    "apellido": "Lopez",
+    "mail": "martina.lopez@alquilarte.com",
+    "sector": "Ventas",
+    "rol": "Agente inmobiliario"
+  },
+  {
+    "id": 2,
+    "nombre": "Julián",
+    "apellido": "Pérez",
+    "mail": "julian.perez@alquilarte.com",
+    "sector": "Administración",
+    "rol": "Administrativo"
+  },
+  {
+    "id": 3,
+    "nombre": "Valeria",
+    "apellido": "Ramirez",
+    "mail": "valeria.ramirez@alquilarte.com",
+    "sector": "Contabilidad",
+    "rol": "Contadora"
+  },
+  {
+    "id": 4,
+    "nombre": "Lucas",
+    "apellido": "Fernández",
+    "mail": "lucas.fernandez@alquilarte.com",
+    "sector": "Mantenimiento",
+    "rol": "Supervisor de mantenimiento"
+  },
+  {
+    "id": 5,
+    "nombre": "Soledad",
+    "apellido": "Martínez",
+    "mail": "soledad.martinez@alquilarte.com",
+    "sector": "Ventas",
+    "rol": "Coordinadora de ventas"
+  },
+  {
+    "id": 6,
+    "nombre": "Tomás",
+    "apellido": "Gómez",
+    "mail": "tomas.gomez@alquilarte.com",
+    "sector": "Administración",
+    "rol": "Responsable de contratos"
+  },
+  {
+    "id": 7,
+    "nombre": "Carla",
+    "apellido": "Nuñez",
+    "mail": "carla.nunez@alquilarte.com",
+    "sector": "Contabilidad",
+    "rol": "Auxiliar contable"
+  }
+]

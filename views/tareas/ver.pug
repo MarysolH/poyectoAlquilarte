@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title Detalles de la Tarea
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 Detalles de la Tarea
+
+    ul
+      li
+        strong ID: 
+        | #{tarea.id}
+      li
+        strong Título: 
+        | #{tarea.titulo}
+      li
+        strong Descripción: 
+        | #{tarea.descripcion}
+      li
+        strong Área: 
+        | #{tarea.area}
+      li
+        strong Asignado a: 
+        - var persona = personas.find(p => p.id === tarea.asignado)
+        | #{persona ? persona.nombre + ' ' + persona.apellido : 'Sin asignar'}
+      li
+        strong Estado: 
+        | #{tarea.estado}
+      li
+        strong Prioridad:
+        | #{tarea.prioridad}
+      li
+        strong Fecha de Inicio:
+        | #{tarea.fechaInicio}
+      li
+        strong Fecha de Vencimiento:
+        | #{tarea.fechaVencimiento}
+      
+    a(href="/tareas") Volver al listado

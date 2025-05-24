@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title Panel de administración - Personas
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 Panel de administración - Personas
+
+    a.btn-agregar(href="/cuenta") + Agregar persona
+
+    table
+      thead
+        tr
+          th Nombre
+          th Apellido
+          th Email
+          th Acciones
+      tbody
+        each persona in personas
+          tr
+            td #{persona.nombre}
+            td #{persona.apellido}
+            td #{persona.mail}
+            td
+              a(href=`/cuenta/${persona.id}`) Ver
+              a(href=`/cuenta/${persona.id}/editar`) Editar
+              a(href=`/cuenta/${persona.id}/eliminar`, class="btn-eliminar") Eliminar
+
+    a.btn-agregar(href="/") Volver al inicio.          

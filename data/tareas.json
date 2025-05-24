@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "titulo": "Revisión de contrato",
+    "descripcion": "Verificar cláusulas del nuevo contrato de alquiler.",
+    "area": "Administración",
+    "asignado": 2,
+    "estado": "pendiente",
+    "prioridad": "alta",
+    "fechaInicio": "2025-05-16",
+    "fechaVencimiento": "2025-05-30"
+  },
+  {
+    "id": 2,
+    "titulo": "Inspección de propiedad",
+    "descripcion": "Coordinar visita para inspeccionar el estado del inmueble.",
+    "area": "Mantenimiento",
+    "asignado": 5,
+    "estado": "en progreso",
+    "prioridad": "alta",
+    "fechaInicio": "2025-05-03",
+    "fechaVencimiento": ""
+  },
+  {
+    "id": 3,
+    "titulo": "Liquidación de comisiones",
+    "descripcion": "Calcular y procesar las comisiones del mes para los agentes.",
+    "area": "Contabilidad",
+    "asignado": 7,
+    "estado": "completada",
+    "prioridad": "alta",
+    "fechaInicio": "2025-05-20",
+    "fechaVencimiento": "2025-05-23"
+  },
+  {
+    "id": 4,
+    "titulo": "Realizar mantenimiento dpto 6A",
+    "descripcion": "Realizar el mantenimiento",
+    "area": "Mantenimiento",
+    "asignado": 1,
+    "estado": "pendiente",
+    "prioridad": "alta",
+    "fechaInicio": "2025-05-22",
+    "fechaVencimiento": "2025-05-30"
+  },
+  {
+    "id": 5,
+    "titulo": "Revisar contrato",
+    "descripcion": "Verificar que se complete la documentación correctamente",
+    "area": "Administración",
+    "asignado": 1,
+    "estado": "pendiente",
+    "prioridad": "alta",
+    "fechaInicio": "2025-05-24",
+    "fechaVencimiento": "2025-05-26"
+  }
+]

@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Confirmar eliminación
+    link(rel='stylesheet', href='/styles.css')
+  body
+    h1 ¿Estás seguro que querés eliminar a #{persona.nombre} #{persona.apellido}?
+
+    form(action=`/cuenta/${persona.id}/eliminar` method="POST")
+      button(type="submit" class="btn-eliminar") Sí, eliminar.
+      br
+
+    a(href='/admin') No, volver al inicio.

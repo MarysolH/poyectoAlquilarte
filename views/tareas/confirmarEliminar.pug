@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        title Confirmar Eliminación
+        link(rel="stylesheet", href="/styles.css")
+    body
+        h1 Confirmar Eliminación
+
+        p ¿Estás seguro de que deseas eliminar la tarea "#{tarea.titulo}"?
+
+        form(action=`/tareas/${tarea.id}/eliminar`, method="POST")
+            button(type="submit") Sí, eliminar
+
+        a(href="/tareas") Cancelar

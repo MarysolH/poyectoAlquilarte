@@ -1,0 +1,67 @@
+doctype html
+html
+  head
+    title Listado de Tareas
+    link(rel="stylesheet", href="/styles.css")
+  body
+    h1 Listado de Tareas
+
+    a.btn-agregar(href="/tareas/nueva") + Agregar nueva tarea
+
+    //- FORMULARIO DE FILTROS
+    form(action="/tareas", method="get")
+      div
+        label(for="estado") Estado:
+        select(name="estado", id="estado")
+          option(value="") Todos
+          option(value="pendiente") Pendiente
+          option(value="en progreso") En progreso
+          option(value="completada") Completada
+
+      div
+        label(for="prioridad") Prioridad:
+        select(name="prioridad", id="prioridad")
+          option(value="") Todas
+          option(value="alta") Alta
+          option(value="media") Media
+          option(value="baja") Baja
+
+      div
+        label(for="desde") Desde:
+        input(type="date", name="desde", id="desde")
+
+      div
+        label(for="hasta") Hasta:
+        input(type="date", name="hasta", id="hasta")
+
+      button(type="submit") Filtrar
+
+    h2 #{area}
+    table
+      thead
+        tr
+          th ID
+          th Título
+          th Descripción
+          th Área
+          th Asignado a
+          th Estado
+          th Acciones
+      tbody
+        each tarea in tareas
+          tr
+            td #{tarea.id}
+            td #{tarea.titulo}
+            td #{tarea.descripcion}
+            td #{tarea.area}
+            td
+              - var personaAsignada = personas.find(p => p.id === tarea.asignado)
+              = personaAsignada ? personaAsignada.nombre + ' ' + personaAsignada.apellido : 'Sin asignar'
+            td #{tarea.estado}
+            td
+              a(href=`/tareas/${tarea.id}`) Ver
+              |  
+              a(href=`/tareas/${tarea.id}/editar`) Editar
+              a(href=`/tareas/${tarea.id}/eliminar`, class="btn-eliminar") Eliminar
+
+    a.btn-agregar(href="/") Volver al inicio

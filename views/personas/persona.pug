@@ -1,0 +1,24 @@
+doctype html 
+html 
+    head 
+        title Persona 
+        link(rel="stylesheet", href="/styles.css")
+    body 
+        h1 Datos de la persona
+
+        .persona-detalle 
+        p ID: #{persona.id}
+        p Nombre: #{persona.nombre}
+        p Apellido: #{persona.apellido}
+        p Email: #{persona.mail}
+        p Sector: #{persona.sector}
+        p Rol: #{persona.rol}
+        
+        a(href='/admin') Volver al inicio.
+        br
+        
+        a(href=`/cuenta/${persona.id}/editar`) Editar 
+        br
+        
+        a(href=`/cuenta/${persona.id}/eliminar`) Eliminar
+        
