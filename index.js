@@ -22,9 +22,13 @@ import Persona from './models/Persona.js';
 const app = express();
 const PORT = 3000;
 
+//Variable para almacenar el usuario
+let usuarioActual = null;
+
 // Definimos las rutas de los archivo JSON que usaremos como "base de datos".
 const DB_PERSONAS = './data/personas.json';
 const DB_TAREAS = './data/tareas.json';
+const DB_USUARIOS = './data/usuarios.json';
 
 // Middleware para procesar los datos que llegan en formularios HTML 
 app.use(express.urlencoded({ extended: true }));
@@ -35,11 +39,27 @@ app.use(express.json());
 //Para usar archivos desde la carpeta public (estilos css)
 app.use(express.static('public'));
 
+// Middleware para que usuario esté disponible en todas las vistas
+app.use((req, res, next) => {
+  res.locals.usuario = usuarioActual;
+  next();
+});
+
 // Configuramos Pug como el motor de plantillas 
 // para renderizar las vistas en el servidor
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+
+//Función asincrónica para leer los datos del archivo JSON.(Usuarios)
+const leerUsuarios = async () => {
+    try {
+        const data = await readFile(DB_USUARIOS, 'utf-8');
+        return JSON.parse(data);
+    } catch {
+        return[];
+    }
+};
 
 //Función asincrónica para leer los datos del archivo JSON.(Personas)
 const leerDatos = async () => {
@@ -70,12 +90,35 @@ const escribirTareas = async (data) => {
     await writeFile(DB_TAREAS, JSON.stringify(data, null, 2));
 };
 
-// Ruta raíz que redirige a la página principal
-app.get('/', (req, res) => {
-  res.render('index');
+//Ruta al inicio de sesion
+app.get('/login', (req, res) => {
+    res.render('login');
 });
 
-// Rutas relacionadas con la fgestión personas
+app.post('/login', async (req, res) => {
+    const { usuario, contraseña } = req.body;
+    const usuarios = await leerUsuarios();
+
+    const usuarioEncontrado = usuarios.find(u => u.usuario === usuario && u.contraseña === contraseña);
+
+    if (usuarioEncontrado) {
+        usuarioActual = usuarioEncontrado;
+        return res.redirect('/');
+    }
+    
+    res.render('autenticacion/error', { mensaje: 'Usuario y/o contraseña incorrecto. Vuelva a intentar' });
+});
+
+// Ruta raíz que redirige a la página principal
+app.get('/', (req, res) => {
+    if (!usuarioActual) {
+        return res.redirect('/login');
+    }
+
+    res.render('index');
+});
+
+// Rutas relacionadas con la gestión personas
 
 // Muestra el listado de personas y un formulario 
 // para agregar nuevas personas.

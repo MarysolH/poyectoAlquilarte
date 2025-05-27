@@ -1,3 +1,30 @@
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  background-color: #e6f0ff;
+  border-bottom: 2px solid #cbd6e2;
+  color: #333;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+span {
+  margin-right: 15px;
+  font-weight: bold;
+  color: gray;
+}
+.btn-salir {
+  padding: 8px 15px;
+  background-color: #d9534f;
+  color: white;
+  border-radius: 4px;
+}
+.btn-salir:hover {
+  background-color: #c9302c;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -28,9 +55,7 @@ form label {
   font-weight: bold;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="email"] {
+form input {
   width: 100%;
   padding: 6px 8px;
   margin-top: 5px;
@@ -144,7 +169,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.btn-agregar {
+.btn-agregar, .btn-iniciarSesion {
   display: inline-block;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -156,6 +181,6 @@ a:hover {
   font-weight: bold;
 }
 
-.btn-agregar:hover {
+.btn-ini:hover, .btn-iniciarSesion:hover {
   background-color: #0056b3;
 }
