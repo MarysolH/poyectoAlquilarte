@@ -4,6 +4,8 @@ html
     title Confirmar eliminación
     link(rel='stylesheet', href='/styles.css')
   body
+    include ../header.pug
+
     h1 ¿Estás seguro que querés eliminar a #{persona.nombre} #{persona.apellido}?
 
     form(action=`/cuenta/${persona.id}/eliminar` method="POST")

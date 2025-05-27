@@ -4,6 +4,8 @@ html
         title Agregar Tarea
         link(rel="stylesheet", href="/styles.css")
     body
+        include ../header.pug
+        
         h1 Nueva Tarea
 
         form(action="/tareas" method="POST")
