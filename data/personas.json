@@ -12,8 +12,8 @@
     "nombre": "Julián",
     "apellido": "Pérez",
     "mail": "julian.perez@alquilarte.com",
-    "sector": "Administración",
-    "rol": "Administrativo"
+    "sector": "Administración y dirección",
+    "rol": "Director General"
   },
   {
     "id": 3,
@@ -29,23 +29,23 @@
     "apellido": "Fernández",
     "mail": "lucas.fernandez@alquilarte.com",
     "sector": "Mantenimiento",
-    "rol": "Supervisor de mantenimiento"
+    "rol": "Coordinador de mantenimiento"
   },
   {
     "id": 5,
     "nombre": "Soledad",
     "apellido": "Martínez",
     "mail": "soledad.martinez@alquilarte.com",
-    "sector": "Ventas",
-    "rol": "Coordinadora de ventas"
+    "sector": "Ventas y tasación",
+    "rol": "Tasador"
   },
   {
     "id": 6,
     "nombre": "Tomás",
     "apellido": "Gómez",
     "mail": "tomas.gomez@alquilarte.com",
-    "sector": "Administración",
-    "rol": "Responsable de contratos"
+    "sector": "Gestión de contratos y pagos",
+    "rol": "Gestor de contratos"
   },
   {
     "id": 7,
