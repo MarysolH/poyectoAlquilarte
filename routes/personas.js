@@ -7,7 +7,6 @@ import {
 	editarPersonaPost,
 	eliminarPersonaGet,
 	eliminarPersonaPost,
-	adminPanel,
 } from '../controllers/personasController.js';
 
 const router = express.Router();
