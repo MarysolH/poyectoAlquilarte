@@ -28,3 +28,9 @@ export const loginPost = async (req, res) => {
 		mensaje: 'Usuario y/o contraseña incorrecto. Vuelva a intentar',
 	});
 };
+
+export const logout = (req, res) => {
+	usuarioActual = null;
+
+	res.redirect('login');
+}
