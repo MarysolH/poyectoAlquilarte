@@ -8,7 +8,7 @@ html
     
         h1 Editar datos de #{persona.nombre} #{persona.apellido}
 
-        form(action=`/cuenta/${persona.id}/editar` method="POST")
+        form(action=`/personas/${persona.id}/editar` method="POST")
             div
                 label(for="nombre") Nombre:
                 input(type="text" name="nombre" id="nombre" required value=persona.nombre)

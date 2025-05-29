@@ -9,7 +9,7 @@ html
     
     h1 Panel de administración - Personas
 
-    a.btn-agregar(href="/cuenta") + Agregar persona
+    a.btn-agregar(href="/personas") + Agregar persona
 
     table
       thead
@@ -25,8 +25,8 @@ html
             td #{persona.apellido}
             td #{persona.mail}
             td
-              a(href=`/cuenta/${persona.id}`) Ver
-              a(href=`/cuenta/${persona.id}/editar`) Editar
-              a(href=`/cuenta/${persona.id}/eliminar`, class="btn-eliminar") Eliminar
+              a(href=`/personas/${persona.id}`) Ver
+              a(href=`/personas/${persona.id}/editar`) Editar
+              a(href=`/personas/${persona.id}/eliminar`, class="btn-eliminar") Eliminar
 
     a.btn-agregar(href="/") Volver al inicio.          

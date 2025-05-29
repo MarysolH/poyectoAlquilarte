@@ -30,7 +30,7 @@ app.set('views', './views');
 
 // Rutas principales
 app.use('/', authRoutes);
-app.use('/cuenta', personasRoutes);
+app.use('/personas', personasRoutes);
 app.use('/tareas', tareasRoutes);
 
 // Ruta raíz que redirige a la página principal

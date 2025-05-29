@@ -54,5 +54,21 @@
     "mail": "carla.nunez@alquilarte.com",
     "sector": "Contabilidad",
     "rol": "Auxiliar contable"
+  },
+  {
+    "id": null,
+    "nombre": "Maxi",
+    "apellido": "Melani",
+    "mail": "alquilarte@gmail.com",
+    "sector": "Ventas",
+    "rol": "Empleado"
+  },
+  {
+    "id": null,
+    "nombre": "Maxi",
+    "apellido": "Melani",
+    "mail": "alquilarte@gmail.com",
+    "sector": "Ventas",
+    "rol": "Empleado"
   }
 ]

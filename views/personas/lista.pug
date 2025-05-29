@@ -10,10 +10,10 @@ html
         ul
         each persona in personas
             li
-                a(href=`/cuenta/${persona.id}`) #{persona.nombre} #{persona.apellido}
+                a(href=`/personas/${persona.id}`) #{persona.nombre} #{persona.apellido}
         
         h2 Agregar nueva persona
-    form(action="/cuenta" method="POST")
+    form(action="/personas" method="POST")
 
         div
           label(for="id") ID:
