@@ -6,18 +6,14 @@ html
     body
         include ../header.pug
 
-        h1 Lista de personas registradas
+        
         ul
         each persona in personas
             li
-                a(href=`/personas/${persona.id}`) #{persona.nombre} #{persona.apellido}
+                a(href=`/personas/${persona.id}`) #[strong ID #{persona.id}]: #{persona.nombre} #{persona.apellido}
         
         h2 Agregar nueva persona
     form(action="/personas" method="POST")
-
-        div
-          label(for="id") ID:
-          input(type="number" name="id" id="id" required)
 
         div
           label(for="nombre") Nombre:

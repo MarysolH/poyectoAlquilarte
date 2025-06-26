@@ -14,16 +14,22 @@ html
     table
       thead
         tr
+          th ID
           th Nombre
           th Apellido
           th Email
+          th Sector 
+          th Rol
           th Acciones
       tbody
         each persona in personas
           tr
+            td #{persona.id}
             td #{persona.nombre}
             td #{persona.apellido}
             td #{persona.mail}
+            td #{persona.sector}
+            td #{persona.rol}
             td
               a(href=`/personas/${persona.id}`) Ver
               a(href=`/personas/${persona.id}/editar`) Editar

@@ -4,9 +4,14 @@ import personasRoutes from './routes/personas.js';
 import tareasRoutes from './routes/tareas.js';
 import { getUsuarioActual } from './controllers/authController.js';
 import { adminPanel } from './controllers/adminController.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
-const PORT = 3000;
+
+// Necesario para rutas absolutas en ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware para procesar los datos que llegan en formularios HTML
 app.use(express.urlencoded({ extended: true }));
@@ -18,32 +23,33 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Middleware para que usuario esté disponible en todas las vistas
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
 	res.locals.usuario = getUsuarioActual();
 	next();
+});*/
+//Para usar mientras no hay autenticacion
+app.use((req, res, next) => {
+  // Usuario falso para desarrollo:
+  res.locals.usuario = {
+    nivelAcceso: 'Admin',
+    usuario: 'devUser'
+  };
+  next();
 });
 
 // Configuramos Pug como el motor de plantillas
 // para renderizar las vistas en el servidor
 app.set('view engine', 'pug');
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 
 // Rutas principales
 app.use('/', authRoutes);
 app.use('/personas', personasRoutes);
 app.use('/tareas', tareasRoutes);
-
-// Ruta raíz que redirige a la página principal
-app.get('/', (req, res) => {
-	if (!getUsuarioActual()) {
-		return res.redirect('/login');
-	}
-	res.render('index');
-});
-
 app.get('/admin', adminPanel);
 
-// Iniciamos el servidor
-app.listen(PORT, () => {
-	console.log(`Servidor corriendo en http://localhost:${PORT}`);
+app.get('/', (req, res) => {
+  res.render('index'); 
 });
+
+export default app;

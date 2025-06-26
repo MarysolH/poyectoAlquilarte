@@ -1,11 +1,20 @@
 // Clase que representa a una persona del sistema
-export default class Persona {
-    constructor(id, nombre, apellido, mail, sector, rol) {
-      this.id = id;
-      this.nombre = nombre;
-      this.apellido = apellido;
-      this.mail = mail;
-      this.sector = sector;
-      this.rol = rol;
-    }
-}
+import mongoose from 'mongoose';
+import AutoIncrementFactory from 'mongoose-sequence';
+
+const AutoIncrement = AutoIncrementFactory(mongoose);
+
+
+const personaSchema = new mongoose.Schema({
+  id: { type: Number, unique: true },
+  nombre: { type: String, required: true, trim: true },
+  apellido: { type: String, required: true, trim: true },
+  mail: { type: String, required: true, match: /.+@.+\..+/ },
+  sector: { type: String, required: true },
+  rol: { type: String, required: true },
+});
+
+// Activamos el plugin para que autoincremente 'id'
+personaSchema.plugin(AutoIncrement, { inc_field: 'id' });
+
+export default mongoose.model('Persona', personaSchema);

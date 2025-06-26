@@ -1,0 +1,5 @@
+.env
+NOTAS_PERSONALES.md
+node_modules/
+archivos-no-usados/
+data/

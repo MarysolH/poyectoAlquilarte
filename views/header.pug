@@ -1,3 +1,6 @@
 header
-    span #{usuario.nivelAcceso}: #{usuario.usuario}
-    a.btn-salir(href="/logout") Cerrar sesión
+    if usuario
+        span #{usuario.nivelAcceso}: #{usuario.usuario}
+        a.btn-salir(href="/logout") Cerrar sesión
+    else
+        span Invitado 

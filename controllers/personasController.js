@@ -1,122 +1,134 @@
-import { leerJSON, escribirJSON } from '../utils/fileUtils.js';
+
 import Persona from '../models/Persona.js';
 
-const DB_PERSONAS = './data/personas.json';
-
-//Función asincrónica para leer los datos del archivo JSON.(Personas)
-const leerDatos = async () => {
-	return await leerJSON(DB_PERSONAS);
-};
-// Función asincrónica para escribir datos en el archivo JSON.
-const escribirDatos = async data => {
-	await escribirJSON(DB_PERSONAS, data);
-};
-
-// Muestra el listado de personas y un formulario
-// para agregar nuevas personas.
+// Mostrar lstado de personas
 export const listaPersonas = async (req, res) => {
-	const personas = await leerDatos();
-	res.render('personas/lista', { personas });
+	try {
+		const personas = await Persona.find();
+		console.log('Personas encontradas:', personas);
+
+		res.render('personas/lista', { personas });
+	} catch (error) {
+		console.error('Error al obtener personas:', error);
+		res.status(500).render('personas/error', {mensaje: 'Error al obtener personas'});
+	}
 };
+
 
 // Agregar una nueva persona
 export const agregarPersona = async (req, res) => {
-	const { id, nombre, apellido, mail, sector, rol } = req.body;
-	const personas = await leerDatos();
-	const existe = personas.find(p => p.id === parseInt(id));
+	const { nombre, apellido, mail, sector, rol } = req.body;
+	
+	try {
+		const nueva = new Persona({ nombre, apellido, mail, sector, rol }); // SIN id
+		await nueva.save();
+		console.log('Persona guardada:', nueva);
 
-	if (existe) {
-		return res.status(400).render('personas/error', {
-			mensaje: 'Ya existe una persona con ese ID',
+		res.render('personas/exito', {
+			mensaje: `Persona agregada correctamente con ID ${nueva.id}`, // opcional mostrarlo
+		});
+	} catch (error) {
+		console.error('Error al agregar persona:', error)
+		res.status(500).render('personas/error', {
+			mensaje: 'Error al agregar persona',
 		});
 	}
-
-	const nueva = new Persona(parseInt(id), nombre, apellido, mail, sector, rol);
-	personas.push(nueva);
-	await escribirDatos(personas);
-	res.render('personas/exito', { mensaje: 'Persona agregada correctamente' });
 };
+
 
 // Muestra los detalles de una persona específica
 export const detallePersona = async (req, res) => {
-	const personas = await leerDatos();
+	const id = req.params.id;
 
-	const id = parseInt(req.params.id);
-	const persona = personas.find(p => p.id === id);
+	try {
+		const persona = await Persona.findOne({ id: parseInt(id)});
 
-	if (!persona) {
-		return res
-			.status(404)
-			.render('personas/error', { mensaje: 'No se encontró la persona' });
+		if (!persona) {
+			return res.status(404).render('personas/error', { mensaje: 'No se encontró la persona' });
+		}
+
+		res.render('personas/persona', { persona });
+	} catch (error) {
+		res.status(500).render('personas/error', {mensaje: 'Error al buscar persona'});
 	}
-
-	res.render('personas/persona', { persona });
 };
+
 
 // Muestra formulario para editar datos de una persona
 export const editarPersonaGet = async (req, res) => {
-	const personas = await leerDatos();
-	const id = parseInt(req.params.id);
-	const persona = personas.find(p => p.id === id);
+	const id = req.params.id;
+	
+	try {
+		const persona = await Persona.findOne({ id: parseInt(id)});
 
-	if (!persona) {
-		return res.status(404).render('personas/error', {
-			mensaje: 'No se encontró la persona para editar',
-		});
+		if (!persona) {
+			return res.status(404).render('personas/error', {
+				mensaje: 'No se encontró la persona para editar',
+			});
+		}
+
+		res.render('personas/editar', { persona });
+	} catch (error) {
+		res.status(500).render('personas/error', {mensaje: 'Error al buscar persona'});
 	}
-
-	res.render('personas/editar', { persona });
 };
 
-// Recibe los datos de un formulario y guarda la actualización
-// de datos de una  persona registrada en el archivo JSON.
+
+// Guardar cambios de edición
 export const editarPersonaPost = async (req, res) => {
-	const personas = await leerDatos();
-	const id = parseInt(req.params.id);
-	const index = personas.findIndex(p => p.id === id);
-
-	if (index === -1) {
-		return res.status(404).render('personas/error', {
-			mensaje: 'No se encontró la persona para editar',
-		});
-	}
-
+	const id = req.params.id;
 	const { nombre, apellido, mail, sector, rol } = req.body;
-	personas[index] = { ...personas[index], nombre, apellido, mail, sector, rol };
-	await escribirDatos(personas);
-	res.render('personas/exito', {
-		mensaje: 'Persona actualizada correctamente',
-	});
+
+	try {
+		const persona = await Persona.findOneAndUpdate(
+			{ id: parseInt(id) },
+			{ nombre, apellido, mail, sector, rol },
+			{ new: true }
+		);
+
+		if (!persona) {
+			return res.status(404).render('personas/error', {
+				mensaje: 'No se encontró la persona para editar',
+			});
+		}
+
+		res.render('personas/exito', { mensaje: 'Persona actualizada correctamente'});
+	} catch (error) {
+		res.status(500).render('personas/error', {mensaje: 'Error al actualizar persona'});
+	}
 };
 
-// Muestra formulario de confirmación para eliminar una persona
+
+//Confirmación para eliminar una persona
 export const eliminarPersonaGet = async (req, res) => {
-	const personas = await leerDatos();
-	const id = parseInt(req.params.id);
-	const persona = personas.find(p => p.id === id);
+	const id = req.params.id;
 
-	if (!persona) {
-		return res
-			.status(404)
-			.render('error', { mensaje: 'No se encontró la persona a eliminar' });
+	try {
+		const persona = await Persona.findOne({ id: parseInt(id)});
+
+		if (!persona) {
+			return res.status(404).render('error', { mensaje: 'No se encontró la persona a eliminar' });
+		}
+
+		res.render('personas/confirmarEliminar', { persona });
+	} catch (error) {
+		res.status(500).render('personas/error', {mensaje: 'Error al actualizar persona'});
 	}
-
-	res.render('personas/confirmarEliminar', { persona });
 };
 
-// Procesa la eliminación de una persona del archivo JSON
+
+// Eliminar persona
 export const eliminarPersonaPost = async (req, res) => {
-	let personas = await leerDatos();
-	const id = parseInt(req.params.id);
-	const existe = personas.find(p => p.id === id);
+	const id = req.params.id;
 
-	if (!existe) {
-		return res.status(404).render('personas/error', {
-			mensaje: 'No se encontró la persona a eliminar',
-		});
+	try {
+		const persona = await Persona.findOneAndDelete({ id: parseInt(id)});
+		
+		if (!persona) {
+		return res.status(404).render('personas/error', { mensaje: 'No se encontró la persona a eliminar'});
+		} 
+		res.render('personas/exito', { mensaje: 'Persona eliminada correctamente' });
+	} catch (error) {
+			res.status(500).render('personas/error', {mensaje: 'Error al eliminar persona'});
 	}
-
-	personas = personas.filter(p => p.id !== id);
-	await escribirDatos(personas);
-	res.render('personas/exito', { mensaje: 'Persona eliminada correctamente' });
 };

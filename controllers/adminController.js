@@ -1,8 +1,11 @@
-import { leerJSON } from '../utils/fileUtils.js';
-
-const DB_PERSONAS = './data/personas.json';
+import Persona from '../models/Persona.js';
 
 export const adminPanel = async (req, res) => {
-	const personas = await leerJSON(DB_PERSONAS);
-	res.render('admin', { personas });
+	try {
+		const personas = await Persona.find();
+		res.render('admin', { personas }); 
+	} catch (error) {
+		console.error('Error al obtener personas:', error);
+		res.status(500).render('personas/error', { mensaje: 'Error al obtener personas' });
+	}
 };
