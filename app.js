@@ -10,6 +10,7 @@ import dashboardRoutes from './routes/dashboard.js';
 import clientesRoutes from './routes/clientes.js';
 import session from 'express-session';
 import propiedadesRoutes from './routes/propiedades.js';
+import pingRoutes from './routes/index.js';
 
 
 const app = express();
@@ -78,6 +79,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-
+app.use('/', pingRoutes);
 
 export default app;
