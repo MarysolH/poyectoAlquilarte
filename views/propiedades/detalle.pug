@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title Detalle de propiedad
+    link(rel='stylesheet', href='/styles.css')
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes          
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Detalle de Propiedad
+      p Dirección: #{propiedad.direccion}
+      p Tipo: #{propiedad.tipo}
+      p Estado: #{propiedad.estado}
+      p Precio: $#{propiedad.precio}
+      p Descripción: #{propiedad.descripcion}
+      if propiedad.propietario
+        p Propietario: #{propiedad.propietario.nombre} #{propiedad.propietario.apellido}
+
+      

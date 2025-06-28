@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title Panel principal - Alquilarte
+    link(rel="stylesheet", href="/styles.css")
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes          
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Panel principal
+      p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'}
+
+      .cards
+        .card
+          h3 Total propiedades
+          p 48
+        .card
+          h3 Alquiladas
+          p 36
+        .card
+          h3 Disponibles
+          p 12
+        .card
+          h3 Pagos pendientes
+          p $24.500

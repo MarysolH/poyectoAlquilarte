@@ -6,6 +6,11 @@ import { getUsuarioActual } from './controllers/authController.js';
 import { adminPanel } from './controllers/adminController.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dashboardRoutes from './routes/dashboard.js';
+import clientesRoutes from './routes/clientes.js';
+import session from 'express-session';
+import propiedadesRoutes from './routes/propiedades.js';
+
 
 const app = express();
 
@@ -21,6 +26,16 @@ app.use(express.json());
 
 //Para usar archivos desde la carpeta public (estilos css)
 app.use(express.static('public'));
+
+
+// Para dashboard
+app.use('/dashboard', dashboardRoutes);
+
+//Para clientes
+app.use('/clientes', clientesRoutes);
+
+//Para propiedades
+app.use('/propiedades', propiedadesRoutes);
 
 // Middleware para que usuario esté disponible en todas las vistas
 /*app.use((req, res, next) => {
@@ -48,8 +63,21 @@ app.use('/personas', personasRoutes);
 app.use('/tareas', tareasRoutes);
 app.get('/admin', adminPanel);
 
+// Ruta principal: redirige al dashboard
 app.get('/', (req, res) => {
-  res.render('index'); 
+  res.redirect('/dashboard');
 });
+
+app.get('/admin', (req, res) => {
+  res.redirect('/personas');
+});
+
+app.use(session({
+  secret: 'clave-secreta',
+  resave: false,
+  saveUninitialized: false
+}));
+
+
 
 export default app;

@@ -13,7 +13,9 @@ const router = express.Router();
 
 router.get('/', listaPersonas);
 router.post('/', agregarPersona);
-
+router.get('/lista', (req, res) => {
+  res.render('personas/lista');
+});
 router.get('/:id', detallePersona);
 router.get('/:id/editar', editarPersonaGet);
 router.post('/:id/editar', editarPersonaPost);

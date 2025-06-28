@@ -12,6 +12,7 @@ const personaSchema = new mongoose.Schema({
   mail: { type: String, required: true, match: /.+@.+\..+/ },
   sector: { type: String, required: true },
   rol: { type: String, required: true },
+  tipo: { type: String,  required: true, lowercase: true, enum: ['empleado']}
 });
 
 // Activamos el plugin para que autoincremente 'id'

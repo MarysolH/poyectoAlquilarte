@@ -4,23 +4,34 @@ html
         title Persona 
         link(rel="stylesheet", href="/styles.css")
     body
-        include ../header.pug
+        aside.sidebar
+            h2 Alquilarte S.A.
+            nav
+                ul.nav-principal
+                    li: a(href='/dashboard') Home
+                    li: a(href='/propiedades') Gestión propiedades
+                    li: a(href='/clientes') Gestión de clientes          
+                    li: a(href='/contratos') Contratos
+                    li: a(href='/pagos') Pagos
+                    li: a(href='/mantenimiento') Mantenimiento
+                    li: a(href='/personas') Gestión de personal
+                    li: a(href='/reportes') Reportes
+                    li: a(href='/logout') Cerrar sesión
+        main.content
+            h1 Gestión de personal                
+    
+            main.container
+                h1 Datos de #{persona.nombre} #{persona.apellido}
 
-        h1 Datos de la persona
+                .persona-detalle
+                p #[strong ID:] #{persona.id}
+                p #[strong Nombre:] #{persona.nombre}
+                p #[strong Apellido:] #{persona.apellido}
+                p #[strong Email:] #{persona.mail}
+                p #[strong Sector:] #{persona.sector}
+                p #[strong Rol:] #{persona.rol}
 
-        .persona-detalle 
-        p ID: #[strong ID: ] #{persona.id}
-        p Nombre: #{persona.nombre}
-        p Apellido: #{persona.apellido}
-        p Email: #{persona.mail}
-        p Sector: #{persona.sector}
-        p Rol: #{persona.rol}
-        
-        a(href='/admin') Volver al inicio.
-        br
-        
-        a(href=`/personas/${persona.id}/editar`) Editar 
-        br
-        
-        a(href=`/personas/${persona.id}/eliminar`) Eliminar
-        
+                
+                a.btn-editar(href=`/personas/${persona.id}/editar`) Editar
+                a.btn-eliminar(href=`/personas/${persona.id}/eliminar`) Eliminar
+                

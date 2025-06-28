@@ -3,8 +3,7 @@ html
   head
     title Confirmar eliminación
     link(rel='stylesheet', href='/styles.css')
-  
-  body    
+  body
       aside.sidebar
         h2 Alquilarte S.A.
         nav
@@ -20,11 +19,11 @@ html
             li: a(href='/logout') Cerrar sesión
 
       main.content
-        h1 Gestión de personal 
+        h1 Gestión de clientes
 
         section.container
-            h1 ¿Estás seguro que querés eliminar a #{persona.nombre} #{persona.apellido}?
+          h1 ¿Seguro que deseas eliminar a #{cliente.nombre} #{cliente.apellido}?
 
-            form(action=`/personas/${persona._id}/eliminar` method="POST")
-              button.btn-eliminar(type="submit") Sí, eliminar
-              a.btn-cancelar(href='/personas') Cancelar
+          form(action=`/clientes/${cliente._id}/eliminar`, method="POST")
+            button.btn-eliminar(type="submit", class="btn-eliminar") Sí, eliminar
+            a.btn-cancelar(href='/clientes') Cancelar

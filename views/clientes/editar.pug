@@ -1,0 +1,53 @@
+doctype html
+html
+  head
+    title Editar cliente
+    link(rel='stylesheet', href='/styles.css')
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes          
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Gestión de clientes
+
+      section.container
+        h1 Editar datos de #{cliente.nombre} #{cliente.apellido}
+
+        form.formulario(action=`/clientes/${cliente._id}/editar` method="POST")
+          div(class="campo")
+            label Nombre:
+            input(type="text", name="nombre", value=cliente.nombre, required)
+
+          div(class="campo")
+            label Apellido:
+            input(type="text", name="apellido", value=cliente.apellido, required)
+
+          div(class="campo")
+            label Email:
+            input(type="email", name="mail", value=cliente.mail, required)
+
+          div(class="campo")
+            label Teléfono:
+            input(type="text", name="telefono", value=cliente.telefono, required)
+
+          div(class="campo")
+            label Tipo:
+            select(name="tipo", required)
+              option(value="inquilino", selected=cliente.tipo==='inquilino') Inquilino
+              option(value="propietario", selected=cliente.tipo==='propietario') Propietario
+
+          .acciones-form
+          button.btn-guardar(type="submit") Guardar cambios
+
+          a.btn-cancelar(href='/clientes') Cancelar

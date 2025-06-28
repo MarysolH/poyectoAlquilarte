@@ -1,0 +1,67 @@
+doctype html
+html
+  head
+    title Panel de administración - Personas
+    link(rel="stylesheet", href="/styles.css")
+
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Gestión de personal
+      p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'}
+
+      .cards
+        .card
+          h3 Sector Contable          
+
+        .card
+          h3 Sector Administración          
+
+        .card
+          h3 Sector Mantenimiento
+          
+      .acciones
+        a(href='/personas/lista', class='btn-agregar') Agregar nueva persona
+
+      table
+        thead
+          tr
+            th ID
+            th Nombre
+            th Apellido
+            th Email
+            th Sector
+            th Rol
+            th Acciones
+        tbody
+          if personas.length > 0
+            each persona in personas
+              tr
+                td #{persona.id}
+                td #{persona.nombre}
+                td #{persona.apellido}
+                td #{persona.mail}
+                td #{persona.sector}
+                td #{persona.rol}
+                td
+                  a(href=`/personas/${persona._id}`, class='btn-ver') Ver
+                  a(href=`/personas/${persona._id}/editar`, class='btn-editar') Editar
+                  a(href=`/personas/${persona._id}/eliminar`, class='btn-eliminar') Eliminar
+          else
+            tr
+              td(colspan='7') No hay personal registrado aún.
+
+      

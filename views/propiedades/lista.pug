@@ -1,0 +1,53 @@
+doctype html
+html
+  head
+    title Lista de propiedades
+    link(rel='stylesheet', href='/styles.css')
+  body
+    include ../header
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+    main.content
+      h1 Lista de propiedades
+
+      a.btn-agregar(href='/propiedades/nueva') + Nueva propiedad
+
+      if propiedades.length
+        table
+          thead
+            tr
+              th Dirección
+              th Tipo
+              th Estado
+              th Precio
+              th Propietario
+              th Acciones
+          tbody
+            each propiedad in propiedades
+              tr
+                td #{propiedad.direccion}
+                td #{propiedad.tipo}
+                td #{propiedad.estado}
+                td $#{propiedad.precio}
+                td 
+                  if propiedad.propietario
+                    | #{propiedad.propietario.nombre} #{propiedad.propietario.apellido}
+                  else
+                    | -
+                td
+                  a.btn-detalle(href=`/propiedades/${propiedad._id}`) Ver
+                  a(href=`/propiedades/${propiedad._id}/editar`) Editar
+                  a(href=`/propiedades/${propiedad._id}/eliminar`) Eliminar
+      else
+        p No hay propiedades registradas aún.

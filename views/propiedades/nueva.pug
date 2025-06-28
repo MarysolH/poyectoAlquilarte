@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    title Nueva propiedad
+    link(rel='stylesheet', href='/styles.css')
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes          
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión          
+    main.content
+      h1 Gestión de propiedades     
+        
+      section.container
+        h1 Nueva propiedad        
+
+        form.formulario(action='/propiedades/nueva' method='POST')
+            div(class="campo")
+                label(for='direccion') Dirección:
+                input(type='text' name='direccion' required)
+
+            div(class="campo")
+                label(for='tipo') Tipo:
+                input(type='text' name='tipo' required)
+
+            div(class="campo")
+                label(for='estado') Estado:
+                select(name='estado')
+                    option(value='disponible') Disponible
+                    option(value='reservada') Reservada
+                    option(value='alquilada') Alquilada
+
+            div(class="campo")
+                label(for='precio') Precio:
+                input(type='number' name='precio' required)
+
+            div(class="campo")
+                label(for='descripcion') Descripción:
+                textarea(name='descripcion')
+
+            div(class="campo")
+                label(for='propietario') Propietario:
+                select(name='propietario' required)
+                    option(value='') --Seleccione propietario--
+                    each cliente in clientes
+                        if cliente.tipo === 'propietario'
+                            option(value=cliente._id) #{cliente.nombre} #{cliente.apellido}
+                
+            
+            .acciones-form
+                button.btn-guardar(type="submit") Guardar datos
+                a.btn-cancelar(href='/propiedades') Cancelar

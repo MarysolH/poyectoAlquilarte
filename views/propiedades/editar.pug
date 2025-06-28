@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title Editar propiedad
+    link(rel='stylesheet', href='/styles.css')
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Editar propiedad
+
+      form.formulario(action=`/propiedades/${propiedad._id}/editar` method='POST')
+        div.campo
+          label(for='direccion') Dirección:
+          input(type='text', name='direccion', value=propiedad.direccion, required)
+
+        div.campo
+          label(for='tipo') Tipo:
+          input(type='text', name='tipo', value=propiedad.tipo, required)
+
+        div.campo
+          label(for='estado') Estado:
+          select(name='estado')
+            option(value='disponible', selected=propiedad.estado === 'disponible') Disponible
+            option(value='reservada', selected=propiedad.estado === 'reservada') Reservada
+            option(value='alquilada', selected=propiedad.estado === 'alquilada') Alquilada
+
+        div.campo
+          label(for='precio') Precio:
+          input(type='number', name='precio', value=propiedad.precio, required)
+
+        div.campo
+          label(for='descripcion') Descripción:
+          textarea(name='descripcion')= propiedad.descripcion
+
+        div.campo
+          label(for='propietario') Propietario:
+          select(name='propietario')
+            each cliente in propietarios
+              option(value=cliente._id, selected=cliente._id.equals(propiedad.propietario)) #{cliente.nombre} #{cliente.apellido}
+
+        .acciones-form
+          button.btn-guardar(type='submit') Guardar cambios
+          a.btn-cancelar(href='/propiedades') Cancelar

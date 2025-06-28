@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title Eliminar propiedad
+    link(rel='stylesheet', href='/styles.css')
+  body
+    aside.sidebar
+      h2 Alquilarte S.A.
+      nav
+        ul.nav-principal
+          li: a(href='/dashboard') Home
+          li: a(href='/propiedades') Gestión propiedades
+          li: a(href='/clientes') Gestión de clientes
+          li: a(href='/contratos') Contratos
+          li: a(href='/pagos') Pagos
+          li: a(href='/mantenimiento') Mantenimiento
+          li: a(href='/personas') Gestión de personal
+          li: a(href='/reportes') Reportes
+          li: a(href='/logout') Cerrar sesión
+
+    main.content
+      h1 Gestión de propiedades
+
+      section.container
+        h1 Eliminar propiedad
+        p ¿Estás seguro que querés eliminar la siguiente propiedad?
+
+        ul
+          li Dirección: #{propiedad.direccion}
+          li Tipo: #{propiedad.tipo}
+          li Estado: #{propiedad.estado}
+          li Precio: $#{propiedad.precio}
+          if propiedad.propietario
+            li Propietario: #{propiedad.propietario.nombre} #{propiedad.propietario.apellido}
+          else
+            li Propietario: No asignado
+
+        form(action=`/propiedades/${propiedad._id}/eliminar` method='POST')
+          button.btn-eliminar(type='submit') Confirmar eliminación
+          a.btn-cancelar(href='/propiedades') Cancelar

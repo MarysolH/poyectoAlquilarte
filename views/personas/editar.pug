@@ -4,33 +4,48 @@ html
         title Editar persona
         link(rel='stylesheet', href='/styles.css')
     body
-        include ../header.pug
+        aside.sidebar
+            h2 Alquilarte S.A.
+            nav
+                ul.nav-principal
+                    li: a(href='/dashboard') Home
+                    li: a(href='/propiedades') Gestión propiedades
+                    li: a(href='/clientes') Gestión de clientes          
+                    li: a(href='/contratos') Contratos
+                    li: a(href='/pagos') Pagos
+                    li: a(href='/mantenimiento') Mantenimiento
+                    li: a(href='/personas') Gestión de personal
+                    li: a(href='/reportes') Reportes
+                    li: a(href='/logout') Cerrar sesión
+        main.content
+            h1 Gestión de personal                
     
-        h1 Editar datos de #{persona.nombre} #{persona.apellido}
+            section.container
+                h1 Editar datos de #{persona.nombre} #{persona.apellido}
 
-        form(action=`/personas/${persona.id}/editar` method="POST")
-            div
-                label(for="nombre") Nombre:
-                input(type="text" name="nombre" id="nombre" required value=persona.nombre)
+                form.formulario(action=`/personas/${persona._id}/editar` method="POST")
+                    div(class="campo")
+                        label(for="nombre") Nombre:
+                        input(type="text" name="nombre" id="nombre" required value=persona.nombre)
 
-            div
-                label(for="apellido") Apellido:
-                input(type="text" name="apellido" id="apellido" required value=persona.apellido)
+                    div(class="campo")
+                        label(for="apellido") Apellido:
+                        input(type="text" name="apellido" id="apellido" required value=persona.apellido)
 
-            div
-                label(for="mail") Email:
-                input(type="email" name="mail" id="mail" required value=persona.mail)
+                    div(class="campo")
+                        label(for="mail") Email:
+                        input(type="email" name="mail" id="mail" required value=persona.mail)
 
-            div
-                label(for="sector") Sector:
-                input(type="text" name="sector" id="sector" required value=persona.sector)
+                    div(class="campo")
+                        label(for="sector") Sector:
+                        input(type="text" name="sector" id="sector" required value=persona.sector)
 
-            div
-                label(for="rol") Rol:
-                input(type="text" name="rol" id="rol" required value=persona.rol)
-                
+                    div(class="campo")
+                        label(for="rol") Rol:
+                        input(type="text" name="rol" id="rol" required value=persona.rol)
+                        
+                    .acciones-form
+                        button.btn-guardar(type="submit") Guardar cambios 
+            
 
-            button(type="submit") Guardar cambios 
-        
-
-        a(href='/admin') Cancelar
+                    a.btn-cancelar(href='/personas') Cancelar
