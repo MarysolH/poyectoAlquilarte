@@ -3,7 +3,10 @@ html
   head
     title Panel principal - Alquilarte
     link(rel="stylesheet", href="/styles.css")
+  
   body
+  .dashboard-container
+
     aside.sidebar
       h2 Alquilarte S.A.
       nav
@@ -18,20 +21,59 @@ html
           li: a(href='/reportes') Reportes
           li: a(href='/logout') Cerrar sesión
 
-    main.content
+    section.contenido-principal
       h1 Panel principal
       p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'}
 
       .cards
-        .card
-          h3 Total propiedades
-          p 48
-        .card
+        a.card(href='/propiedades')
+          h3 Total de propiedades
+          p #{total}
+        a.card(href='/propiedades/alquiladas')
           h3 Alquiladas
-          p 36
-        .card
-          h3 Disponibles
-          p 12
+          p #{totalAlquiladas}
+        a.card(href='/propiedades/reservadas')
+          h3 Reservadas
+          p #{totalReservadas}
         .card
           h3 Pagos pendientes
           p $24.500
+
+      .tareas
+        h2 Tareas pendientes
+        table
+          thead
+            tr
+              th Descripción
+              th Responsable
+              th Prioridad
+              th Fecha
+          tbody
+            each tarea in tareasSimuladas
+              tr
+                td= tarea.descripcion
+                td= tarea.responsable
+                td= tarea.prioridad
+                td= tarea.fecha
+
+    section.ultimos-registros
+      h2 Últimos registros
+
+      .area
+        h3 Propiedades 
+        ul
+          each propiedad in ultimasPropiedades
+            li #{propiedad.tipo}: #{propiedad.direccion}
+
+      .area
+        h3 Clientes 
+        ul
+          each cliente in ultimosClientes
+            li #{cliente.nombre} #{cliente.apellido} - #{cliente.tipo}
+
+      .area
+        h3 Personal 
+        ul
+          each persona in ultimasPersonas
+            li #{persona.nombre} #{persona.apellido} - #{persona.rol}
+    

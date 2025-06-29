@@ -3,20 +3,16 @@ html
   head
     title Alquilarte - Login
     link(rel="stylesheet", href="/styles.css")
-  
   body
-    h1 Iniciar sesión
+    .login-container
+      .login-box
+        h1 Iniciar sesión
 
-    form(action="/login" method="POST")
-    
-      label(for="usuario") Usuario:
-      input(type="text", name="usuario", required)
-      br
-      br
+        form(action="/login" method="POST")
+          label(for="usuario") Usuario:
+          input(type="text" name="usuario" required)
 
-      label(for="contraseña") Contraseña:
-      input(type="password", name="contraseña", required)
-      br
-      br
+          label(for="contraseña") Contraseña:
+          input(type="password" name="contraseña" required)
 
-      button(type="submit") Iniciar sesión  
+          button(type="submit") Iniciar sesión

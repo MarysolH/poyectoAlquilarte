@@ -26,4 +26,5 @@ router.get('/propietarios', listarPropietarios);
 router.get('/buscar', listarPorApellido);
 
 
+
 export default router;
