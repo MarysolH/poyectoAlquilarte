@@ -5,19 +5,8 @@ html
     link(rel='stylesheet', href='/styles.css')
   body
     include ../header
-    aside.sidebar
-      h2 Alquilarte S.A.
-      nav
-        ul.nav-principal
-          li: a(href='/dashboard') Home
-          li: a(href='/propiedades') Gestión propiedades
-          li: a(href='/clientes') Gestión de clientes
-          li: a(href='/contratos') Contratos
-          li: a(href='/pagos') Pagos
-          li: a(href='/mantenimiento') Mantenimiento
-          li: a(href='/personas') Gestión de personal
-          li: a(href='/reportes') Reportes
-          li: a(href='/logout') Cerrar sesión
+    include ../components/sidebar.pug
+    
     main.content
       h1 Lista de propiedades
 
@@ -47,7 +36,7 @@ html
                     | -
                 td
                   a.btn-detalle(href=`/propiedades/${propiedad._id}`) Ver
-                  a(href=`/propiedades/${propiedad._id}/editar`) Editar
+                  button.btn-guardar(type='submit') Guardar cambios
                   a(href=`/propiedades/${propiedad._id}/eliminar`) Eliminar
       else
         p No hay propiedades registradas aún.

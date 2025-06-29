@@ -7,19 +7,8 @@ html
   body
   .dashboard-container
 
-    aside.sidebar
-      h2 Alquilarte S.A.
-      nav
-        ul.nav-principal
-          li: a(href='/dashboard') Home
-          li: a(href='/propiedades') Gestión propiedades
-          li: a(href='/clientes') Gestión de clientes          
-          li: a(href='/contratos') Contratos
-          li: a(href='/pagos') Pagos
-          li: a(href='/mantenimiento') Mantenimiento
-          li: a(href='/personas') Gestión de personal
-          li: a(href='/reportes') Reportes
-          li: a(href='/logout') Cerrar sesión
+    include ../components/sidebar.pug
+    
 
     main.content
       h1 Gestión de clientes

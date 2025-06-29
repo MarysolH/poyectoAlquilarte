@@ -7,19 +7,8 @@ html
   body
   .dashboard-container
 
-    aside.sidebar
-      h2 Alquilarte S.A.
-      nav
-        ul.nav-principal
-          li: a(href='/dashboard') Home
-          li: a(href='/propiedades') Gestión propiedades
-          li: a(href='/clientes') Gestión de clientes
-          li: a(href='/contratos') Contratos
-          li: a(href='/pagos') Pagos
-          li: a(href='/mantenimiento') Mantenimiento
-          li: a(href='/personas') Gestión de personal
-          li: a(href='/reportes') Reportes
-          li: a(href='/logout') Cerrar sesión
+    include ../components/sidebar.pug
+    
 
     main.content
       h1 Gestión de personal
@@ -27,13 +16,16 @@ html
 
       .cards
         .card
-          h3 Sector Contable          
+          h3 Area Contabilidad          
 
         .card
-          h3 Sector Administración          
+          h3 Area Administración          
 
         .card
-          h3 Sector Mantenimiento
+          h3 Area Mantenimiento
+
+        .card
+          h3 Area Comercial  
           
       .acciones
         a(href='/personas/lista', class='btn-agregar') Agregar nueva persona
