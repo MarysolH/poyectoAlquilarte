@@ -1,0 +1,97 @@
+doctype html
+html
+  head
+    title Editar Contrato
+    link(rel='stylesheet', href='/styles.css')
+  body
+  .dashboard-container
+    include ../components/sidebar.pug
+      
+    main.content
+      h1 Editar Contrato
+        
+      section.container
+        form.formulario(action=`/contratos/${contrato._id}/editar`, method='POST')
+          div(class="campo")
+            label(for='propiedad') Propiedad
+            select(name='propiedad', required)
+              each prop in propiedades
+                if prop._id.toString() === contrato.propiedad._id.toString()
+                  option(value=prop._id, selected)= prop.direccion
+                else
+                  option(value=prop._id)= prop.direccion
+
+          div(class="campo")
+            label(for='inputPropietario') Propietario
+            input#inputPropietario(type='text', readonly, value=`${contrato.propietario.nombre} ${contrato.propietario.apellido}`)
+            input#hiddenPropietario(type='hidden', name='propietario', value=contrato.propietario._id)
+
+          div(class="campo")
+            label(for='inquilino') Inquilino
+            select(name='inquilino', required)
+              each persona in inquilinos
+                if persona._id.toString() === contrato.inquilino._id.toString()
+                  option(value=persona._id, selected)= persona.nombre + ' ' + persona.apellido
+                else
+                  option(value=persona._id)= persona.nombre + ' ' + persona.apellido
+
+          div(class="campo")
+            label(for='fecha_inicio') Fecha de Inicio
+            input(type='date', name='fecha_inicio', value=contrato.fecha_inicio.toISOString().slice(0,10), required)
+
+          div(class="campo")  
+            label(for='fecha_fin') Fecha de Fin
+            input(type='date', name='fecha_fin', value=contrato.fecha_fin.toISOString().slice(0,10), required)
+
+          div(class="campo")
+            label(for='inputPrecio') Precio
+            input#inputPrecio(type='number', readonly, value=contrato.precio)
+            input#hiddenPrecio(type='hidden', name='precio', value=contrato.precio)
+
+          div(class="campo")
+            label(for='estado') Estado
+            select(name='estado')
+              each est in ['activo','finalizado','cancelado']
+                if est === contrato.estado
+                  option(value=est, selected)= est.charAt(0).toUpperCase() + est.slice(1)
+                else
+                  option(value=est)= est.charAt(0).toUpperCase() + est.slice(1)
+          div(class="campo")
+            label(for='observaciones') Observaciones
+            textarea(name='observaciones')= contrato.observaciones
+
+          .acciones-form
+          button.btn-guardar(type="submit") Guardar cambios
+          a.btn-cancelar(href='/contratos') Cancelar
+
+        
+        script.
+          document.getElementById('selectPropiedad').addEventListener('change', async function() {
+            const propiedadId = this.value;
+            const inputProp   = document.getElementById('inputPropietario');
+            const hiddenProp  = document.getElementById('hiddenPropietario');
+            const inputPrecio = document.getElementById('inputPrecio');
+            const hiddenPrecio= document.getElementById('hiddenPrecio');
+
+            if (!propiedadId) {
+              inputProp.value = '';
+              hiddenProp.value = '';
+              inputPrecio.value = '';
+              hiddenPrecio.value = '';
+              return;
+            }
+
+            try {
+              const res = await fetch(`/contratos/datos/${propiedadId}`);
+              if (!res.ok) throw new Error('No se pudo cargar');
+              const { propietario, propietarioId, precio } = await res.json();
+
+              inputProp.value    = propietario;
+              hiddenProp.value   = propietarioId;  // <-- usar el ID del cliente
+              inputPrecio.value  = precio;
+              hiddenPrecio.value = precio;
+            } catch (err) {
+              console.error(err);
+              alert('Error al cargar datos de la propiedad');
+            }
+          });

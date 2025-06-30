@@ -11,6 +11,7 @@ import clientesRoutes from './routes/clientes.js';
 import session from 'express-session';
 import propiedadesRoutes from './routes/propiedades.js';
 import pingRoutes from './routes/index.js';
+import contratosRoutes from './routes/contratos.js';
 
 
 const app = express();
@@ -72,6 +73,10 @@ app.get('/', (req, res) => {
 app.get('/admin', (req, res) => {
   res.redirect('/personas');
 });
+
+// Ruta para contratos
+
+app.use('/contratos', contratosRoutes);
 
 app.use(session({
   secret: 'clave-secreta',

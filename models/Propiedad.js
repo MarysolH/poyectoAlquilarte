@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const propiedadSchema = new mongoose.Schema({
   direccion: { type: String, required: true },
   tipo: { type: String, required: true },
-  estado: { type: String, required: true },
   precio: { type: Number, required: true },
   descripcion: { type: String },
   propietario: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente' },

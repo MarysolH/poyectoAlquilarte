@@ -1,0 +1,94 @@
+doctype html
+html
+  head
+    title Nuevo Contrato
+    link(rel='stylesheet', href='/styles.css')
+  body
+  .dashboard-container
+
+    include ../components/sidebar.pug
+      
+    main.content
+      h1 Crear Nuevo Contrato
+
+      section.container
+        h1 Completar datos 
+        
+        form.formulario(action='/contratos/nuevo', method='POST')
+          div(class="campo")
+            label(for='selectPropiedad') Propiedad
+            select#selectPropiedad(name='propiedad', required)
+              option(value='') -- Seleccione una propiedad --
+              each prop in propiedades
+                option(value=prop._id)= prop.direccion
+
+          div(class="campo")
+            label(for='inputPropietario') Propietario
+            input#inputPropietario(type='text', readonly, placeholder='Se completará automáticamente')
+            input#hiddenPropietario(type='hidden', name='propietario') 
+
+          div(class="campo")
+            label(for='selectInquilino') Inquilino
+            select#selectInquilino(name='inquilino', required)
+              option(value='') -- Seleccione un inquilino --
+              each persona in inquilinos
+                option(value=persona._id)= persona.nombre + ' ' + persona.apellido
+
+          div(class="campo")
+            label(for='fecha_inicio') Fecha de Inicio
+            input(type='date', name='fecha_inicio', required)
+
+          div(class="campo")
+            label(for='fecha_fin') Fecha de Fin
+            input(type='date', name='fecha_fin', required)
+
+          div(class="campo")
+            label(for='inputPrecio') Precio
+            input#inputPrecio(type='number', readonly, placeholder='Se completará automáticamente')
+            input#hiddenPrecio(type='hidden', name='precio')
+
+          div(class="campo")
+            label(for='estado') Estado
+            select(name='estado')
+              option(value='activo') Activo
+              option(value='finalizado') Finalizado
+              option(value='cancelado') Cancelado
+
+          div(class="campo")
+            label(for='observaciones') Observaciones
+            textarea(name='observaciones')
+
+          .acciones-form
+            button.btn-guardar(type="submit") Guardar contrato
+            a.btn-cancelar(href='/contratos') Cancelar
+          
+          script.
+            document.getElementById('selectPropiedad').addEventListener('change', async function() {
+              const propiedadId = this.value;
+              const inputProp   = document.getElementById('inputPropietario');
+              const hiddenProp  = document.getElementById('hiddenPropietario');
+              const inputPrecio = document.getElementById('inputPrecio');
+              const hiddenPrecio= document.getElementById('hiddenPrecio');
+
+              if (!propiedadId) {
+                inputProp.value = '';
+                hiddenProp.value = '';
+                inputPrecio.value = '';
+                hiddenPrecio.value = '';
+                return;
+              }
+
+              try {
+                const res = await fetch(`/contratos/datos/${propiedadId}`);
+                if (!res.ok) throw new Error('No se pudo cargar');
+                const { propietario, propietarioId, precio } = await res.json();
+
+                inputProp.value    = propietario;
+                hiddenProp.value   = propietarioId;  // <-- usar el ID del cliente
+                inputPrecio.value  = precio;
+                hiddenPrecio.value = precio;
+              } catch (err) {
+                console.error(err);
+                alert('Error al cargar datos de la propiedad');
+              }
+            });
