@@ -1,5 +1,4 @@
 body {
-  
   margin: 0;
   font-family: Arial, sans-serif;
 }
@@ -30,9 +29,8 @@ ul.nav-principal li {
 ul.nav-principal li a {
   color: white;
   background-color: #1e1e2f;
-  font-weight: normal; 
+  font-weight: normal;
   padding-left: 0.5rem;
-  
 }
 .sidebar {
   width: 220px;
@@ -83,7 +81,7 @@ ul.nav-principal li a {
   padding: 1rem;
   border-radius: 8px;
   flex: 1;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   color: inherit;
 }
@@ -95,7 +93,7 @@ table {
   background-color: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 thead {
@@ -103,7 +101,8 @@ thead {
   color: white;
 }
 
-th, td {
+th,
+td {
   padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -262,7 +261,7 @@ td:last-child {
 .area {
   margin-bottom: 2rem;
   background-color: #f9f9f9;
-  border-left: 4px solid #007BFF;
+  border-left: 4px solid #007bff;
   padding: 1rem;
   border-radius: 8px;
 }
@@ -304,7 +303,7 @@ td:last-child {
   background-color: #fff;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }

@@ -11,8 +11,8 @@ import clientesRoutes from './routes/clientes.js';
 import session from 'express-session';
 import propiedadesRoutes from './routes/propiedades.js';
 import pingRoutes from './routes/index.js';
+import reportesRoutes from './routes/reportes.js';
 import contratosRoutes from './routes/contratos.js';
-
 
 const app = express();
 
@@ -29,7 +29,6 @@ app.use(express.json());
 //Para usar archivos desde la carpeta public (estilos css)
 app.use(express.static('public'));
 
-
 // Para dashboard
 app.use('/dashboard', dashboardRoutes);
 
@@ -38,6 +37,9 @@ app.use('/clientes', clientesRoutes);
 
 //Para propiedades
 app.use('/propiedades', propiedadesRoutes);
+
+//Para reportería
+app.use('/reportes', reportesRoutes);
 
 // Middleware para que usuario esté disponible en todas las vistas
 /*app.use((req, res, next) => {
@@ -49,7 +51,7 @@ app.use((req, res, next) => {
   // Usuario falso para desarrollo:
   res.locals.usuario = {
     nivelAcceso: 'Admin',
-    usuario: 'devUser'
+    usuario: 'devUser',
   };
   next();
 });
@@ -78,11 +80,13 @@ app.get('/admin', (req, res) => {
 
 app.use('/contratos', contratosRoutes);
 
-app.use(session({
-  secret: 'clave-secreta',
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(
+  session({
+    secret: 'clave-secreta',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use('/', pingRoutes);
 
