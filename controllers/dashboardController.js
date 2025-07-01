@@ -19,7 +19,6 @@ export const mostrarDashboard = async (req, res) => {
         { descripcion: 'Llamar a propietario por renovación', responsable: 'Ana Torres', prioridad: 'Baja', fecha: '2025-06-25' },
       ];
     res.render('dashboard', {
-      usuario: { nombre: 'Administrador' },//Por ahora simulado
       total,
       totalAlquiladas,
       totalReservadas,

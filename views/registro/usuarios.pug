@@ -1,0 +1,50 @@
+doctype html
+html
+    head
+        title Panel principal - Alquilarte
+        link(rel='stylesheet', href="/styles.css")
+    
+    body
+    .dashboard-container
+
+        include ../components/sidebar.pug
+        
+        main.content
+            h1 Gestión de usuarios
+            p Bienvenido/a #{usuario ? usuario.usuario : 'Invitado/a'}
+
+            .cards
+                a.card(href='/registro')
+                    h3 Total de usuarios
+                    p #{totalUsuarios}
+
+                a.card(href='/registro/administradores')
+                    h3 Administradores
+                    p #{totalAdmins}
+
+                a.card(href='/registro/empleados')
+                    h3 Empleados
+                    p #{totalEmpleados}
+
+            //- Botón agregar usuario
+            .acciones
+                a(href='/registro/nuevo', class='btn-agregar') Agregar nuevo usuario
+                
+            //- Tabla de usuarios
+            if usuarios && usuarios.length > 0
+                table
+                    thead
+                        tr
+                        th Usuario
+                        th Nivel de Acceso
+                        th Acciones
+                    tbody
+                        each usuario in usuarios
+                            tr
+                                td #{usuario.usuario}
+                                td #{usuario.nivelAcceso}
+                                td
+                                    a(href=`/registro/${usuario._id}/editar`, class='btn-editar') Editar
+                                    a(href=`/registro/${usuario._id}/eliminar`, class='btn-eliminar') Eliminar
+            else
+                p No hay usuarios registrados.

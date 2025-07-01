@@ -16,3 +16,8 @@ html
           input(type="password" name="contraseña" required)
 
           button(type="submit") Iniciar sesión
+
+        //- Mostrar botón de registro solo si no hay admin
+        if mostrarRegistro
+          p ¿Primera vez? 
+            a(href="/registro/nuevo") Crear primer usuario

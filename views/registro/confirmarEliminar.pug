@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Confirmar eliminación
+    link(rel='stylesheet', href='/styles.css')
+  body
+  .dashboard-container
+
+      include ../components/sidebar.pug
+
+      main.content
+        h1 Gestión de usuarios
+
+        section.container
+          h1 ¿Seguro que deseas eliminar a #{usuario.usuario}?
+
+          form(action=`/registro/${usuario._id}/eliminar`, method="POST")
+            button.btn-eliminar(type="submit", class="btn-eliminar") Sí, eliminar
+            a.btn-cancelar(href='/registro') Cancelar

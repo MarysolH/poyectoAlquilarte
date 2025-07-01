@@ -2,16 +2,17 @@ import express from 'express';
 import authRoutes from './routes/auth.js';
 import personasRoutes from './routes/personas.js';
 import tareasRoutes from './routes/tareas.js';
-import { getUsuarioActual } from './controllers/authController.js';
 import { adminPanel } from './controllers/adminController.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dashboardRoutes from './routes/dashboard.js';
 import clientesRoutes from './routes/clientes.js';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import propiedadesRoutes from './routes/propiedades.js';
 import pingRoutes from './routes/index.js';
-
+import { verificarSesion } from './controllers/authController.js';
+import registroRoutes from './routes/registro.js';
 
 const app = express();
 
@@ -25,9 +26,35 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware para procesar datos JSON en las peticiones HTTP.
 app.use(express.json());
 
+// Middleware para cookies
+app.use(cookieParser());
+
 //Para usar archivos desde la carpeta public (estilos css)
 app.use(express.static('public'));
 
+app.use(session({
+  secret: 'clave-secreta',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 1 hora (milisegundos)
+  }
+}));
+
+// Middleware para que usuario esté disponible en todas las vistas
+app.use((req, res, next) => {
+	res.locals.usuario = req.session.usuario || null;
+	next();
+});
+
+// Para autenticación
+app.use(authRoutes);
+
+// Para registro de usuarios
+app.use('/registro', registroRoutes);
+
+
+app.use(verificarSesion);
 
 // Para dashboard
 app.use('/dashboard', dashboardRoutes);
@@ -37,21 +64,6 @@ app.use('/clientes', clientesRoutes);
 
 //Para propiedades
 app.use('/propiedades', propiedadesRoutes);
-
-// Middleware para que usuario esté disponible en todas las vistas
-/*app.use((req, res, next) => {
-	res.locals.usuario = getUsuarioActual();
-	next();
-});*/
-//Para usar mientras no hay autenticacion
-app.use((req, res, next) => {
-  // Usuario falso para desarrollo:
-  res.locals.usuario = {
-    nivelAcceso: 'Admin',
-    usuario: 'devUser'
-  };
-  next();
-});
 
 // Configuramos Pug como el motor de plantillas
 // para renderizar las vistas en el servidor
@@ -73,11 +85,13 @@ app.get('/admin', (req, res) => {
   res.redirect('/personas');
 });
 
-app.use(session({
-  secret: 'clave-secreta',
-  resave: false,
-  saveUninitialized: false
-}));
+// Middleware para verificar la sesión
+// app.use('/dashboard', verificarSesion);
+// app.use('/propiedades', verificarSesion);
+// app.use('/clientes', verificarSesion);
+// app.use('/personas', verificarSesion);
+// app.use('/tareas', verificarSesion);
+
 
 app.use('/', pingRoutes);
 

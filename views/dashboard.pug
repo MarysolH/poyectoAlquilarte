@@ -6,7 +6,7 @@ html
   
   body
   .dashboard-container
-
+ 
     aside.sidebar
       h2 Alquilarte S.A.
       nav
@@ -19,11 +19,14 @@ html
           li: a(href='/mantenimiento') Mantenimiento
           li: a(href='/personas') Gestión de personal
           li: a(href='/reportes') Reportes
+          if usuario && usuario.nivelAcceso === 'Admin'
+            li: a(href='/registro') Gestión de usuarios
           li: a(href='/logout') Cerrar sesión
 
     section.contenido-principal
       h1 Panel principal
-      p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'}
+      p Bienvenido/a #{usuario ? usuario.usuario : 'Invitado/a'}
+      p Nivel de acceso: #{usuario.nivelAcceso}
 
       .cards
         a.card(href='/propiedades')

@@ -1,36 +1,48 @@
-import { leerJSON } from '../utils/fileUtils.js';
+import Usuarios from '../models/Usuarios.js';
+import bcrypt from 'bcrypt';
 
-const DB_USUARIOS = './data/usuarios.json';
-
-//Variable para almacenar el usuario
-let usuarioActual = null;
-
-export const getUsuarioActual = () => usuarioActual;
-
-export const loginGet = (req, res) => {
-	res.render('login');
+export const loginGet = async (req, res) => {
+  const cantidadAdmins = await Usuarios.countDocuments({nivelAcceso: /Admin/i});
+  res.render('login', { mostrarRegistro: cantidadAdmins === 0 });
 };
 
 export const loginPost = async (req, res) => {
 	const { usuario, contraseña } = req.body;
-	const usuarios = await leerJSON(DB_USUARIOS);
 
-	const usuarioEncontrado = usuarios.find(
-		u => u.usuario === usuario && u.contraseña === contraseña
-	);
+	const usuarioEncontrado = await Usuarios.findOne({usuario});
 
 	if (usuarioEncontrado) {
-		usuarioActual = usuarioEncontrado;
-		return res.redirect('/');
-	}
+		// Verifica la contraseña usando bcrypt
+		const contraseñaCorrecta = await bcrypt.compare(contraseña, usuarioEncontrado.contraseña);
 
-	res.render('autenticacion/error', {
-		mensaje: 'Usuario y/o contraseña incorrecto. Vuelva a intentar',
-	});
+		if (contraseñaCorrecta) {
+			req.session.usuario = {
+				id: usuarioEncontrado.id,
+				usuario: usuarioEncontrado.usuario,
+				nivelAcceso: usuarioEncontrado.nivelAcceso
+			};
+			return res.redirect('/dashboard');
+		} else {
+			return res.render('autenticacion/error', {mensaje: 'Usuario y/o contraseña incorrecto. Vuelva a intentar'});
+		}
+	} else {
+		return res.render('autenticacion/error', { mensaje: 'Usuario no encontrado.'});
+	};
 };
 
 export const logout = (req, res) => {
-	usuarioActual = null;
-
-	res.redirect('login');
+  	req.session.destroy((err) => {
+		if (err) {
+			return res.status(500).send('Error al cerrar sesión');
+		}
+		res.redirect('/login');
+	});
 }
+
+// Middleware para verificar la sesión
+export const verificarSesion = (req, res, next) => {
+	if (!req.session.usuario) {
+		return res.redirect('/login');
+	}
+	next();
+};

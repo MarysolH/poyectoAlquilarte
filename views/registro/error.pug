@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        title Error - Registro
+        link(rel='stylesheet', href='/styles.css')
+    body
+    .dashboard-container
+
+        include ../components/sidebar.pug
+
+        main.content
+            h1 Error en el registro
+
+            section.container
+                if mensaje
+                    p #{mensaje}
+                else
+                    p Ha ocurrido un error inesperado.
+
+                a(href='/registro', class='btn-cancelar') Volver

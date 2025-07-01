@@ -11,6 +11,8 @@ aside.sidebar
       li: a(href='/mantenimiento') Mantenimiento
       li: a(href='/personas') Gestión de personal
       li: a(href='/reportes') Reportes
+      if usuario && usuario.nivelAcceso === 'Admin'
+        li: a(href='/registro') Gestión de usuarios
       li: a(href='/logout') Cerrar sesión
 
 //-include ../components/sidebar.pug
