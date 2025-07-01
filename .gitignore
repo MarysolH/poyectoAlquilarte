@@ -3,3 +3,11 @@ NOTAS_PERSONALES.md
 node_modules/
 archivos-no-usados/
 data/
+
+usuario de acceso Admin:
+    Usuario: Admin
+    Contraseña: admin123
+
+usuario con acceso Empleado:
+    Usuario: Empleado
+    Contraseña: agente

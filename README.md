@@ -96,3 +96,12 @@ git clone https://github.com/MarysolH/poyectoAlquilarte.git
 3. Crear archivo .env con la siguiente variable:
 MONGO_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/base_de_datos?retryWrites=true&w=majority
 4. Iniciar el servidor: npm start
+
+## Usuarios de acceso
+## Admin:
+    Usuario: Admin
+    Contraseña: admin123
+
+## Empleado:
+    Usuario: Empleado
+    Contraseña: agente
