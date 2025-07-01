@@ -99,9 +99,9 @@ MONGO_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/base_de_datos?re
 
 ## Usuarios de acceso
 ## Admin:
-    Usuario: Admin
+    Usuario: admin
     Contraseña: admin123
 
 ## Empleado:
-    Usuario: Empleado
+    Usuario: Agente 3
     Contraseña: agente

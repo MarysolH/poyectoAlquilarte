@@ -5,9 +5,9 @@ archivos-no-usados/
 data/
 
 usuario de acceso Admin:
-    Usuario: Admin
+    Usuario: admin
     Contraseña: admin123
 
 usuario con acceso Empleado:
-    Usuario: Empleado
+    Usuario: Agente 3
     Contraseña: agente
