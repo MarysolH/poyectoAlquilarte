@@ -1,0 +1,222 @@
+doctype html
+html
+  head
+    title Reportes - Alquilarte
+    link(rel="stylesheet", href="/styles.css")
+    style.
+      .canvas-container {
+        min-width: 300px;
+        max-width: 400px;
+        background: white;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      .div-graficos {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-wrap: wrap;
+        }
+    body.
+    .dashboard-container
+      aside.sidebar
+        h2 Alquilarte S.A.
+        nav
+          ul.nav-principal
+            li: a(href='/dashboard') Home
+            li: a(href='/propiedades') Gestión propiedades
+            li: a(href='/clientes') Gestión de clientes
+            li: a(href='/contratos') Contratos
+            li: a(href='/pagos') Pagos
+            li: a(href='/mantenimiento') Mantenimiento
+            li: a(href='/personas') Gestión de personal
+            li.nav-activo: a(href='/reportes') Reportes
+            li: a(href='/logout') Cerrar sesión
+
+  
+
+      section.contenido-principal
+        h1 Reportes
+        p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'}
+
+        .cards
+          .card
+            h3 Total clientes
+            p #{totalClientes}
+          .card
+            h3 Total inquilinos
+            p #{totalInquilinos}
+          .card
+            h3 Total propietarios
+            p #{totalPropietarios}
+          .card
+            h3 Total propiedades
+            p #{totalPropiedades}
+          .card
+            h3 Alquileres mensuales estimados
+            p $#{totalAlquileresMensuales}
+          .card
+            h3 Precio promedio por propiedad
+            p $#{promedioPrecio}
+
+        h2 Propiedades por estado
+        if propiedadesPorEstado && propiedadesPorEstado.length
+          table
+            thead
+              tr
+                th Estado
+                th Cantidad
+            tbody
+              each item in propiedadesPorEstado
+                tr
+                  td= item._id
+                  td= item.total
+        else
+          p No hay datos disponibles.
+
+        h2 Propiedades por tipo
+        if propiedadesPorTipo && propiedadesPorTipo.length
+          table
+            thead
+              tr
+                th Tipo
+                th Cantidad
+            tbody
+              each item in propiedadesPorTipo
+                tr
+                  td= item._id
+                  td= item.total
+        else
+          p No hay datos disponibles.
+
+        h2 Propiedades por rango de precio
+        if propiedadesPorRangoPrecio && propiedadesPorRangoPrecio.length
+          table
+            thead
+              tr
+                th Rango
+                th Cantidad
+            tbody
+              each item in propiedadesPorRangoPrecio
+                tr
+                  td= item._id
+                  td= item.total
+        else
+          p No hay datos disponibles.
+
+        h2 Empleados por rol
+        if empleadosPorRol && empleadosPorRol.length
+          table
+            thead
+              tr
+                th Rol
+                th Cantidad
+            tbody
+              each item in empleadosPorRol
+                tr
+                  td= item._id
+                  td= item.total
+        else
+          p No hay datos disponibles.
+
+        h2 Últimos empleados incorporados
+        if ultimosEmpleados && ultimosEmpleados.length
+          ul
+            each empleado in ultimosEmpleados
+              li #{empleado.nombre} #{empleado.apellido} - #{empleado.rol}
+        else
+          p No hay datos disponibles.
+
+        h2 Últimos clientes registrados
+        if ultimosClientes && ultimosClientes.length
+          ul
+            each cliente in ultimosClientes
+              li #{cliente.nombre} #{cliente.apellido} - #{cliente.tipo}
+        else
+          p No hay datos disponibles.
+
+    .div-container-graficos
+        .div-graficos(style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;")
+            .canvas-container(style="min-width: 300px; max-width: 400px;")
+                h2 Propiedades por estado
+                canvas#chartEstado(width="400" height="400")
+
+            .canvas-container(style="min-width: 300px; max-width: 400px;")
+                h2 Empleados por rol
+                canvas#chartEmpleados(width="400" height="400")
+
+
+    // Chart.js CDN
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
+    script.
+      const ctxEstado = document.getElementById('chartEstado').getContext('2d');
+      const dataEstado = {
+        labels: !{JSON.stringify(propiedadesPorEstado.map(item => item._id))},
+        datasets: [{
+          label: 'Cantidad de propiedades',
+          data: !{JSON.stringify(propiedadesPorEstado.map(item => item.total))},
+          backgroundColor: [
+            '#007bff',
+            '#28a745',
+            '#ffc107',
+            '#dc3545',
+            '#6c757d'
+          ],
+          borderColor: '#fff',
+          borderWidth: 1
+        }]
+      };
+      const configEstado = {
+        type: 'doughnut',
+        data: dataEstado,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      };
+      new Chart(ctxEstado, configEstado);
+
+      const ctxEmpleados = document.getElementById('chartEmpleados').getContext('2d');
+      const dataEmpleados = {
+        labels: !{JSON.stringify(empleadosPorRol.map(item => item._id))},
+        datasets: [{
+          label: 'Cantidad de empleados',
+          data: !{JSON.stringify(empleadosPorRol.map(item => item.total))},
+          backgroundColor: [
+            '#17a2b8',
+            '#6f42c1',
+            '#fd7e14',
+            '#20c997',
+            '#e83e8c'
+          ],
+          borderColor: '#fff',
+          borderWidth: 1
+        }]
+      };
+      const configEmpleados = {
+        type: 'bar',
+        data: dataEmpleados,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                precision: 0
+              }
+            }
+          }
+        }
+      };
+      new Chart(ctxEmpleados, configEmpleados);

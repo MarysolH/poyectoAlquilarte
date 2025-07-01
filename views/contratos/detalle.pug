@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title Detalle de Contrato
+    link(rel='stylesheet', href='/styles.css')
+  body
+    .dashboard-container
+      include ../components/sidebar.pug
+
+      main.content
+        h1 Detalle de Contrato
+
+        section.container
+
+          p #[strong Propiedad:] #{contrato.propiedad.direccion}
+          p #[strong Propietario:] #{contrato.propietario.nombre} #{contrato.propietario.apellido}
+          p #[strong Inquilino:] #{contrato.inquilino.nombre} #{contrato.inquilino.apellido}
+          p #[strong Fecha Inicio:] #{contrato.fecha_inicio.toLocaleDateString()}
+          p #[strong Fecha Fin:] #{contrato.fecha_fin.toLocaleDateString()}
+          p #[strong Precio:] $#{contrato.precio}
+          p #[strong Estado:] #{contrato.estado}
+          if contrato.observaciones
+            p #[strong Observaciones:] #{contrato.observaciones}
+
+          .acciones-form
+          a.btn-editar(href=`/contratos/${contrato._id}/editar`) Editar
+                       
+          a.btn-cancelar(href='/contratos') Cancelar

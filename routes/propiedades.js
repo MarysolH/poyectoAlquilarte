@@ -7,7 +7,9 @@ import {
   editarPropiedadPost,
   eliminarPropiedadGet,
   eliminarPropiedadPost,
-  detallePropiedad
+  detallePropiedad,
+  listarPropiedadesAlquiladas,
+  listarPropiedadesReservadas
 } from '../controllers/propiedadesController.js';
 
 const router = express.Router();
@@ -24,5 +26,8 @@ router.post('/:id/editar', editarPropiedadPost);
 
 router.get('/:id/eliminar', eliminarPropiedadGet); 
 router.post('/:id/eliminar', eliminarPropiedadPost); 
+
+router.get('/alquiladas', listarPropiedadesAlquiladas);
+router.get('/reservadas', listarPropiedadesReservadas);
 
 export default router;

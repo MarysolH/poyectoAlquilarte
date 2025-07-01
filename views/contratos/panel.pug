@@ -1,0 +1,57 @@
+doctype html
+html
+  head
+    title Gestión de Contratos
+    link(rel='stylesheet', href='/styles.css')
+  body
+  -
+  .dashboard-container
+    include ../components/sidebar.pug
+
+    main.content
+      h1 Gestión de Contratos
+      p Bienvenido/a #{usuario ? usuario.nombre : 'Invitado/a'} 
+      
+      .cards
+        a.card(href='/contratos?filtro=activos')
+          h3 Contratos activos
+          p= contratosActivos
+          
+        a.card(href='/contratos?filtro=proximos') 
+          h3 Próximos a vencer
+          p= proximosAVencer
+
+        a.card(href='/contratos')
+          h3 Ingresos mes actual
+          p $#{ingresosMes}
+        
+      .acciones
+        a.btn-agregar(href='/contratos/nuevo')  Nuevo contrato
+        
+      if contratos.length
+        table
+          thead
+            tr
+              th Propiedad
+              th Inquilino
+              th Propietario
+              th Fecha Inicio
+              th Fecha Fin
+              th Precio
+              th Estado
+              th Acciones
+          tbody
+            each contrato in contratos
+              tr
+                td= contrato.propiedad ? contrato.propiedad.direccion : ''
+                td= contrato.inquilino ? contrato.inquilino.nombre + ' ' + contrato.inquilino.apellido : ''
+                td= contrato.propietario ? contrato.propietario.nombre + ' ' + contrato.propietario.apellido : ''
+                td= contrato.fecha_inicio ? contrato.fecha_inicio.toLocaleDateString() : ''
+                td= contrato.fecha_fin ? contrato.fecha_fin.toLocaleDateString() : ''
+                td $#{contrato.precio}
+                td= contrato.estado
+                td
+                  a.btn-detalle(href=`/contratos/${contrato._id}`) Ver
+                  a.btn-editar(href=`/contratos/${contrato._id}/editar`) Editar
+                    
+          

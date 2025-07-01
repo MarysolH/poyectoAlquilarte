@@ -11,8 +11,11 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import propiedadesRoutes from './routes/propiedades.js';
 import pingRoutes from './routes/index.js';
+import reportesRoutes from './routes/reportes.js';
+import contratosRoutes from './routes/contratos.js';
 import { verificarSesion } from './controllers/authController.js';
 import registroRoutes from './routes/registro.js';
+
 
 const app = express();
 
@@ -31,7 +34,6 @@ app.use(cookieParser());
 
 //Para usar archivos desde la carpeta public (estilos css)
 app.use(express.static('public'));
-
 app.use(session({
   secret: 'clave-secreta',
   resave: false,
@@ -65,6 +67,9 @@ app.use('/clientes', clientesRoutes);
 //Para propiedades
 app.use('/propiedades', propiedadesRoutes);
 
+//Para reportería
+app.use('/reportes', reportesRoutes);
+
 // Configuramos Pug como el motor de plantillas
 // para renderizar las vistas en el servidor
 app.set('view engine', 'pug');
@@ -85,12 +90,8 @@ app.get('/admin', (req, res) => {
   res.redirect('/personas');
 });
 
-// Middleware para verificar la sesión
-// app.use('/dashboard', verificarSesion);
-// app.use('/propiedades', verificarSesion);
-// app.use('/clientes', verificarSesion);
-// app.use('/personas', verificarSesion);
-// app.use('/tareas', verificarSesion);
+// Ruta para contratos
+app.use('/contratos', contratosRoutes);
 
 
 app.use('/', pingRoutes);

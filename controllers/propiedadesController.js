@@ -4,17 +4,30 @@ import Cliente from '../models/Cliente.js'; // ver si lo agregamos
 // Listar todas las propiedades
 export const listarPropiedades = async (req, res) => {
   try {
-    const propiedades = await Propiedad.find().populate('propietario');
-    const total = propiedades.length;
-    const totalAlquiladas = propiedades.filter(p => p.estado === 'alquilada').length;
-    const totalReservadas = propiedades.filter(p => p.estado === 'reservada').length;
+    const filtro = req.query.filtro;
+
+    let propiedades;
+
+    if (filtro === 'alquiladas') {
+      propiedades = await Propiedad.find({ estado: 'alquilada' }).populate('propietario');
+    } else if (filtro === 'reservadas') {
+      propiedades = await Propiedad.find({ estado: 'reservada' }).populate('propietario');
+    } else {
+      propiedades = await Propiedad.find().populate('propietario');
+    }
+
+    const total = await Propiedad.countDocuments();
+    const totalAlquiladas = await Propiedad.countDocuments({ estado: 'alquilada' });
+    const totalReservadas = await Propiedad.countDocuments({ estado: 'reservada' });
 
     res.render('propiedades/panel', {
       propiedades,
       total,
       totalAlquiladas,
-      totalReservadas
+      totalReservadas,
+      filtro
     });
+    
   } catch (error) {
     console.error('Error al listar propiedades:', error);
     res.status(500).render('propiedades/error', { mensaje: 'Error al listar propiedades' });
@@ -54,7 +67,7 @@ export const detallePropiedad = async (req, res) => {
     if (!propiedad) return res.status(404).render('propiedades/error', { mensaje: 'Propiedad no encontrada' });
     res.render('propiedades/detalle', { propiedad });
   } catch (error) {
-    res.status(500).render('propiedades/error', { mensaje: 'Error al cargar la propiedad' });
+    res.status(500).send('Error al cargar detalle de propiedad');
   }
 };
 
@@ -110,5 +123,41 @@ export const eliminarPropiedadPost = async (req, res) => {
     res.redirect('/propiedades');
   } catch (error) {
     res.status(500).render('propiedades/error', { mensaje: 'Error al eliminar propiedad' });
+  }
+};
+
+// Listar propiedades alquiladas
+export const listarPropiedadesAlquiladas = async (req, res) => {
+  try {
+    const propiedades = await Propiedad.find({ estado: 'alquilada' }).populate('propietario');
+    const totalAlquiladas = propiedades.length;
+
+    res.render('propiedades/panel', {
+      propiedades,
+      total: totalAlquiladas,
+      totalAlquiladas,
+      totalReservadas: 0 // o pasar lo que corresponda
+    });
+  } catch (error) {
+    console.error('Error al listar propiedades alquiladas:', error);
+    res.status(500).render('propiedades/error', { mensaje: 'Error al listar propiedades alquiladas' });
+  }
+};
+
+// Listar propiedades reservadas
+export const listarPropiedadesReservadas = async (req, res) => {
+  try {
+    const propiedades = await Propiedad.find({ estado: 'reservada' }).populate('propietario');
+    const totalReservadas = propiedades.length;
+
+    res.render('propiedades/panel', {
+      propiedades,
+      total: totalReservadas,
+      totalAlquiladas: 0,
+      totalReservadas
+    });
+  } catch (error) {
+    console.error('Error al listar propiedades reservadas:', error);
+    res.status(500).render('propiedades/error', { mensaje: 'Error al listar propiedades reservadas' });
   }
 };
