@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        title Editar usuario
+        link(rel="stylesheet", href="/styles.css")
+    body
+    .dashboard-container
+        include ../components/sidebar.pug
+
+        main.content
+            h1 Gestión de usuarios
+
+            section.container
+                h1 Editar usuario
+
+                form.formulario(action=`/registro/${usuario._id}/editar` method="POST")
+                    div.campo
+                        label(for="usuario") Usuario:
+                        input(type="text" name="usuario" value=usuario.usuario readonly)
+
+                    div.campo
+                        label(for="contraseña") Nueva contraseña:
+                        input(type="password" name="contraseña" placeholder="Dejar en blanco si no desea cambiarla")
+
+                    div.campo
+                        label(for="nivelAcceso") Nivel de Acceso:
+                        select(name="nivelAcceso")
+                            option(value="Admin" selected=usuario.nivelAcceso === 'Admin') Admin
+                            option(value="Empleado" selected=usuario.nivelAcceso === 'Empleado') Empleado
+
+                    .acciones-form
+                    button(type="submit" class="btn-agregar") Guardar cambios
+                    a.btn-cancelar(href='/registro') Cancelar

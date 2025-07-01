@@ -5,36 +5,6 @@ html
     link(rel="stylesheet", href="/styles.css")
   body
     .dashboard-container
-
-    if !usuario
-      //- Si no está logueado, solo mostrar el formulario simple
-      main.content
-        h1 Crear primer Admin
-
-        section.container
-          h1 Completar datos
-
-          form.formulario(action="/registro/nuevo" method="POST")
-            div.campo
-              label(for="usuario") Usuario:
-              input(type="text" name="usuario" required)
-
-            div.campo
-              label(for="contraseña") Contraseña:
-              input(type="password" name="contraseña" required)
-
-            div.campo
-              label(for="nivelAcceso") Nivel de Acceso:
-              select(name="nivelAcceso")
-                option(value="Admin") Admin
-
-            .acciones-form
-              button(type="submit" class="btn-agregar") Registrar usuario
-
-            a.btn-cancelar(href='/login') Cancelar
-    else
-      //- Si está logueado, mostrar toda la estructura completa con sidebar
-      .dashboard-container
         include ../components/sidebar.pug
 
         main.content

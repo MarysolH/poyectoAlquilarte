@@ -40,65 +40,6 @@ export const nuevoUsuarioGet = async (req, res) => {
     res.render('registro/nuevo');
 };
 
-/*export const registrarUsuario = async (req, res) => {
-    const {usuario, contraseña, nivelAcceso} = req.body;
-
-    // Si falta completar algun campo muestra error
-    if (!usuario || !contraseña || !nivelAcceso) {
-        return res.status(400).render('registro/error', {mensaje: 'Todos los campos son obligatorios.'});
-    }
-
-    // Si la contraseña es menor a 6 caracteres muestra error
-    if (contraseña.length < 6) {
-        return res.status(400).render('registro/error', {mensaje: 'La contraseña debe tener al menos 6 caracteres.'});
-    }
-
-    // Verifica si el usuario existe y en caso de hacerlo muestra error
-    const existeUsuario = await Usuarios.findOne({usuario});
-    if (existeUsuario) {
-        return res.status(400).render('registro/error', {mensaje: 'El usuario ya existe.'});
-    }
-
-    // Define el numero de veces que se aplica (aumenta seguridad pero tambien tiempo de procesamiento)
-    const saltRound = 10;
-
-    // Hashea la contraseña
-    const contraseñaHasheada = await bcrypt.hash(contraseña, saltRound);
-
-    // Crea un nuevo usuario
-    const nuevoUsuario = new Usuarios({usuario, contraseña: contraseñaHasheada, nivelAcceso});
-
-    // Guarda el nuevo usuario en la base de datos
-    try {
-        await nuevoUsuario.save();
-    } catch (error) {
-        res.status(500).render('registro/error', {mensaje: 'Error al guardar el usuario. Intente nuevamente.'});
-    }
-
-    res.redirect('/login');
-}*/
-
-// Procesar nuevo usuario
-/*export const nuevoUsuarioPost = async (req, res) => {
-    const {usuario, contraseña, nivelAcceso} = req.body;
-    
-    try {
-        // Validación: verificar si el usuario ya existe
-        const existente = await Usuarios.findOne({usuario});
-        if (existente) {
-            return res.render('registro/error', {
-            mensaje: `El nombre de usuario "${usuario}" ya está en uso.`
-            });
-        } else {
-            const nuevo = new Usuarios({ usuario, contraseña, nivelAcceso });
-            await nuevo.save();
-            res.redirect('/registro');
-        }
-    } catch (error) {
-        res.status(500).render('registro/error', { mensaje: 'Error al guardar usuario' });
-    }
-};*/
-
 // Procesar nuevo usuario
 export const nuevoUsuarioPost = async (req, res) => {
     const { usuario, contraseña, nivelAcceso } = req.body;
@@ -171,16 +112,26 @@ export const editarUsuarioGet = async (req, res) => {
 // Procesar edición
 export const editarUsuarioPost = async (req, res) => {
   const id = req.params.id;
-  const {usuario, contraseña, nivelAcceso} = req.body;
+  const {contraseña, nivelAcceso} = req.body;
 
   try {
-    const usuarioActualizado = await Usuarios.findByIdAndUpdate(id, {
-      usuario, contraseña, nivelAcceso
-    }, { new: true });
-
-    if (!usuarioActualizado) {
-      return res.status(404).render('registro/error', {mensaje: 'Usuario no encontrado para editar'});
+    const usuario = await Usuarios.findById(id);
+    if (!usuario) {
+      return res.status(404).render('registro/error', { mensaje: 'Usuario no encontrado' });
     }
+
+    // Solo actualizamos la contraseña si se ingresó una nueva
+    if (contraseña && contraseña.length >= 6) {
+      const hashedPassword = await bcrypt.hash(contraseña, 10);
+      usuario.contraseña = hashedPassword;
+    } else if (contraseña && contraseña.length > 0 && contraseña.length < 6) {
+      return res.status(400).render('registro/error', { mensaje: 'La contraseña debe tener al menos 6 caracteres' });
+    }
+
+    // Siempre actualizamos el nivel de acceso
+    usuario.nivelAcceso = nivelAcceso;
+
+    await usuario.save();
 
     res.redirect('/registro');
   } catch (error) {
